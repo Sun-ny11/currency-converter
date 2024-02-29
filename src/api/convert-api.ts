@@ -11,6 +11,7 @@ export type comparisonPare = {
    base_code: string;
    target_code: string;
    conversion_rate: number;
+   conversion_result: number
 }
 
 const instance = axios.create({
@@ -19,7 +20,7 @@ const instance = axios.create({
 })
 
 export const convertAPI = {
-   comparisonPair(main: string, withIt: string) {
-      return instance.get<comparisonPare>(`pair/${main}/${withIt}`)
+   comparisonPair(base: string, target: string, amount: number) {
+      return instance.get<comparisonPare>(`pair/${base}/${target}/${amount}`)
    }
 }

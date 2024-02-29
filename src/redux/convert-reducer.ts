@@ -15,6 +15,7 @@ const initialState = {
    base_code: "",
    target_code: "",
    conversion_rate: 0,
+   conversion_result: 0
 }
 export const convertReducer = (state: comparisonPare = initialState, action: convertReducerType): comparisonPare => {
    switch (action.type) {
@@ -35,9 +36,9 @@ export const comparisonAC = (resPair: comparisonPare) => {
    } as const
 }
 
-export const comparisonTC = (main: string, withIt: string) => async (dispatch: Dispatch) => {
+export const comparisonTC = (base: string, target: string, amount: number) => async (dispatch: Dispatch) => {
    try {
-      let res = await convertAPI.comparisonPair(main, withIt)
+      let res = await convertAPI.comparisonPair(base, target, amount)
       dispatch(comparisonAC(res.data))
    } catch (e) {
 
