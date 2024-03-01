@@ -1,8 +1,8 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect } from "react";
 import { AppRootStateType, useAppDispatch } from "../../redux/store";
 import { useSelector } from "react-redux";
 import { AppReducerStateType, setAmountCurrency, setBaseCurrency, setTargetCurrency } from "../../redux/app-reducer";
-import { comparisonTC } from "../../redux/convert-reducer";
+import { comparisonTC, convertStateReducerType, supportedCurrencyTC } from "../../redux/convert-reducer";
 
 type PairComparisonProps = {
    currency: AppReducerStateType
@@ -11,8 +11,12 @@ type PairComparisonProps = {
 export const PairComparison = ({ currency }: PairComparisonProps) => {
 
    const dispatch = useAppDispatch()
-   const conversion = useSelector<AppRootStateType, number>(state => state.convert.conversion_result)
+   const conversion = useSelector<AppRootStateType, convertStateReducerType>(state => state.convert)
 
+
+   useEffect(() => {
+      dispatch(supportedCurrencyTC())
+   }, [])
 
    const baseHandler = (e: ChangeEvent<HTMLSelectElement>) => {
       dispatch(setBaseCurrency(e.currentTarget.value))
@@ -28,6 +32,8 @@ export const PairComparison = ({ currency }: PairComparisonProps) => {
       dispatch(comparisonTC(currency.baseCurrency, currency.targetCurrency, currency.amountCurrency))
    }
 
+
+
    return (
       <>
          <h1>Чтобы узнать курс выберите валюту</h1>
@@ -35,17 +41,15 @@ export const PairComparison = ({ currency }: PairComparisonProps) => {
             <input value={currency.amountCurrency} type="number" onChange={amountHandler} />
 
             <select value={currency.baseCurrency} onChange={baseHandler}>
-               <option value={"USD"}>Доллар</option>
-               <option value={"EUR"}>Евро</option>
+               {conversion.supported_codes.map(el => <option value={el[0]}>{el[1]}</option>)}
             </select>
 
             <select value={currency.targetCurrency} onChange={targetHandler}>
-               <option value={"RUB"}>Российский рубль</option>
-               <option value={"BYN"}>Белорусский рубль</option>
+               {conversion.supported_codes.map(el => <option value={el[0]}>{el[1]}</option>)}
             </select>
 
          </div>
-         <h2>{conversion}</h2>
+         <h2>{conversion.conversion_result}</h2>
          <button onClick={onClickHandler}>Узнать курс</button>
       </>
    );

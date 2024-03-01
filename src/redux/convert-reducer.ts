@@ -1,8 +1,13 @@
 import { Dispatch } from "redux"
-import { comparisonPare, convertAPI } from "../api/convert-api"
+import { Currency, comparisonPare, convertAPI } from "../api/convert-api"
 
-type convertReducerType = comparisonACType
+type convertReducerType = comparisonACType | supportedCurrencyACType
 type comparisonACType = ReturnType<typeof comparisonAC>
+type supportedCurrencyACType = ReturnType<typeof supportedCurrencyAC>
+
+export type convertStateReducerType = comparisonPare & {
+   supported_codes: Currency[]
+}
 
 const initialState = {
    result: "",
@@ -15,12 +20,18 @@ const initialState = {
    base_code: "",
    target_code: "",
    conversion_rate: 0,
-   conversion_result: 0
+   conversion_result: 0,
+   supported_codes: [
+      ["", ""],
+   ]
 }
-export const convertReducer = (state: comparisonPare = initialState, action: convertReducerType): comparisonPare => {
+export const convertReducer = (state: convertStateReducerType = initialState, action: convertReducerType): convertStateReducerType => {
    switch (action.type) {
       case "COMPARISON": {
-         return action.payload.resPair
+         return { ...action.payload.resPair, supported_codes: [...state.supported_codes] }
+      }
+      case "SUPPORTED-CURRENCY": {
+         return { ...state, supported_codes: action.payload.supCode }
       }
 
       default:
@@ -31,7 +42,15 @@ export const comparisonAC = (resPair: comparisonPare) => {
    return {
       type: "COMPARISON",
       payload: {
-         resPair
+         resPair,
+      }
+   } as const
+}
+export const supportedCurrencyAC = (supCode: Currency[]) => {
+   return {
+      type: "SUPPORTED-CURRENCY",
+      payload: {
+         supCode,
       }
    } as const
 }
@@ -40,6 +59,15 @@ export const comparisonTC = (base: string, target: string, amount: number) => as
    try {
       let res = await convertAPI.comparisonPair(base, target, amount)
       dispatch(comparisonAC(res.data))
+   } catch (e) {
+
+   }
+
+}
+export const supportedCurrencyTC = () => async (dispatch: Dispatch) => {
+   try {
+      let res = await convertAPI.fetchSupportedCodes()
+      dispatch(supportedCurrencyAC(res.data.supported_codes))
    } catch (e) {
 
    }

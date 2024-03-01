@@ -14,13 +14,23 @@ export type comparisonPare = {
    conversion_result: number
 }
 
+export type Currency = Array<string>
+type SupportedCodesResponse = {
+   result: string
+   documentation: string
+   terms_of_use: string
+   supported_codes: Currency[]
+};
+
 const instance = axios.create({
    baseURL: "https://v6.exchangerate-api.com/v6/4f7094e78af7307410437337/",
-
 })
 
 export const convertAPI = {
    comparisonPair(base: string, target: string, amount: number) {
       return instance.get<comparisonPare>(`pair/${base}/${target}/${amount}`)
+   },
+   fetchSupportedCodes() {
+      return instance.get<SupportedCodesResponse>("codes")
    }
 }
