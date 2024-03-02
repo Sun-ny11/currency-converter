@@ -3,6 +3,9 @@ import { AppRootStateType, useAppDispatch } from "../../redux/store";
 import { useSelector } from "react-redux";
 import { AppReducerStateType, setAmountCurrency, setBaseCurrency, setTargetCurrency } from "../../redux/app-reducer";
 import { comparisonTC, convertStateReducerType, supportedCurrencyTC } from "../../redux/convert-reducer";
+import s from "./PairComparison.module.css"
+import { Select } from 'antd';
+
 
 type PairComparisonProps = {
    currency: AppReducerStateType
@@ -31,26 +34,40 @@ export const PairComparison = ({ currency }: PairComparisonProps) => {
    const onClickHandler = () => {
       dispatch(comparisonTC(currency.baseCurrency, currency.targetCurrency, currency.amountCurrency))
    }
-
+   const handleChange = (value: string) => {
+      dispatch(setBaseCurrency(value))
+   };
 
 
    return (
-      <>
+      <div className={s.main}>
          <h1>Чтобы узнать курс выберите валюту</h1>
-         <div>
-            <input value={currency.amountCurrency} type="number" onChange={amountHandler} />
+         <div className={s.card}>
 
-            <select value={currency.baseCurrency} onChange={baseHandler}>
-               {conversion.supported_codes.map(el => <option value={el[0]}>{el[1]}</option>)}
-            </select>
-
-            <select value={currency.targetCurrency} onChange={targetHandler}>
-               {conversion.supported_codes.map(el => <option value={el[0]}>{el[1]}</option>)}
-            </select>
+            <div>
+               <select value={currency.baseCurrency} onChange={baseHandler}>
+                  {conversion.supported_codes.map(el => <option value={el[0]}>{el[1]}</option>)}
+               </select>
+               <div>
+                  <input value={currency.amountCurrency} type="number" onChange={amountHandler} />
+               </div>
+            </div>
+            <button onClick={onClickHandler}>Узнать курс</button>
+            <div>
+               <select value={currency.targetCurrency} onChange={targetHandler}>
+                  {conversion.supported_codes.map(el => <option value={el[0]}>{el[1]}</option>)}
+               </select>
+               <h2>{conversion.conversion_result}</h2>
+            </div>
 
          </div>
-         <h2>{conversion.conversion_result}</h2>
-         <button onClick={onClickHandler}>Узнать курс</button>
-      </>
+         <Select
+            defaultValue={currency.baseCurrency}
+            style={{ width: 200 }}
+            onChange={handleChange}
+            options={conversion.supported_codes.map(el => ({ label: el[1], value: el[0], }))}
+         />
+
+      </div>
    );
 };

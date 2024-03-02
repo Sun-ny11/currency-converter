@@ -1,0 +1,7 @@
+.main{
+   border: 1px solid black;
+}
+.card{
+   display: flex;
+   gap: 15px;
+}
