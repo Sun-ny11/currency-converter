@@ -3,11 +3,13 @@ import { convertReducer } from "./convert-reducer";
 import { ThunkDispatch, thunk } from "redux-thunk";
 import { useDispatch } from "react-redux";
 import { appReducer } from "./app-reducer";
+import { errorReducer } from "./error-reducer";
 
 
 const rootReducer = combineReducers({
    convert: convertReducer,
-   app: appReducer
+   app: appReducer,
+   error:errorReducer
 })
 
 export const store = legacy_createStore(rootReducer, undefined, applyMiddleware(thunk))

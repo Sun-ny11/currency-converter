@@ -1,16 +1,20 @@
 import { Dispatch } from "redux"
 import { Currency, comparisonPare, convertAPI } from "../api/convert-api"
+import { setAmountCurrency } from "./app-reducer"
+import { RequestType, setError, setStatus } from "./error-reducer"
 
-type convertReducerType = comparisonACType | supportedCurrencyACType
+type convertReducerType = comparisonACType | supportedCurrencyACType | setSecondCurrencyType
 type comparisonACType = ReturnType<typeof comparisonAC>
 type supportedCurrencyACType = ReturnType<typeof supportedCurrencyAC>
+type setSecondCurrencyType = ReturnType<typeof setSecondCurrency>
+
 
 export type convertStateReducerType = comparisonPare & {
    supported_codes: Currency[]
 }
 
 const initialState = {
-   result: "",
+   result: "idle" as RequestType,
    documentation: "",
    terms_of_use: "",
    time_last_update_unix: 0,
@@ -33,7 +37,11 @@ export const convertReducer = (state: convertStateReducerType = initialState, ac
       case "SUPPORTED-CURRENCY": {
          return { ...state, supported_codes: action.payload.supCode }
       }
+      case "SET-SECOND-CURRENCY": {
+         console.log(state);
 
+         return { ...state, conversion_result: action.payload.second }
+      }
       default:
          return state
    }
@@ -54,12 +62,30 @@ export const supportedCurrencyAC = (supCode: Currency[]) => {
       }
    } as const
 }
+export const setSecondCurrency = (second: number) => {
+   return {
+      type: "SET-SECOND-CURRENCY",
+      payload: {
+         second
+      }
+   } as const
+}
+
+
+
+
 
 export const comparisonTC = (base: string, target: string, amount: number) => async (dispatch: Dispatch) => {
    try {
+      dispatch(setStatus("loading"))
       let res = await convertAPI.comparisonPair(base, target, amount)
+
       dispatch(comparisonAC(res.data))
-   } catch (e) {
+      dispatch(setStatus(res.data.result))
+
+   } catch (e: any) {
+      dispatch(setStatus("failed"))
+      dispatch(setError(e))
 
    }
 

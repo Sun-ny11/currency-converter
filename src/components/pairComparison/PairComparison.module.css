@@ -1,7 +1,28 @@
-.main{
+.main {
    border: 1px solid black;
 }
-.card{
+
+.card {
    display: flex;
    gap: 15px;
+}
+
+.card input {
+   font-size: 30px;
+   -moz-appearance: textfield;
+
+}
+
+input::-webkit-inner-spin-button {
+   display: none;
+}
+
+.iHave {
+   border: 1px solid black;
+
+}
+
+.iWillGive {
+   border: 1px solid black;
+
 }

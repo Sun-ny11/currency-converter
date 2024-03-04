@@ -1,7 +1,8 @@
 import axios from "axios"
+import { RequestType } from "../redux/error-reducer";
 
 export type comparisonPare = {
-   result: string;
+   result: RequestType;
    documentation: string;
    terms_of_use: string;
    time_last_update_unix: number;

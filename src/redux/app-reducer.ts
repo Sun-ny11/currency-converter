@@ -1,4 +1,4 @@
-type AppReducerType = setBaseCurrencyType | setTargetCurrencyType | setAmountCurrencyType
+type AppReducerType = setBaseCurrencyType | setTargetCurrencyType | setAmountCurrencyType 
 type setBaseCurrencyType = ReturnType<typeof setBaseCurrency>
 type setTargetCurrencyType = ReturnType<typeof setTargetCurrency>
 type setAmountCurrencyType = ReturnType<typeof setAmountCurrency>
@@ -11,7 +11,7 @@ export type AppReducerStateType = {
 const initialState = {
    baseCurrency: "USD",
    targetCurrency: "RUB",
-   amountCurrency: 1
+   amountCurrency: 1,
 }
 export const appReducer = (state: AppReducerStateType = initialState, action: AppReducerType): AppReducerStateType => {
    switch (action.type) {
@@ -24,7 +24,6 @@ export const appReducer = (state: AppReducerStateType = initialState, action: Ap
       case "SET-AMOUNT-CURRENCY": {
          return { ...state, amountCurrency: action.payload.amount }
       }
-
       default:
          return state
    }
