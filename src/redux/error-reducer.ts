@@ -1,5 +1,5 @@
 
-export type RequestType = "idle" | "loading" | "succeeded" | "failed"
+export type RequestType = "idle" | "loading" | "succeeded" | "error"
 
 export type InitialStateType = {
    isInitialized: boolean
@@ -14,7 +14,7 @@ export type setIsInitializedType = ReturnType<typeof setIsInitialized>
 const initialState: InitialStateType = {
    isInitialized: false,
    status: "idle",
-   error: null
+   error: null 
 }
 export const errorReducer = (state: InitialStateType = initialState, action: ActionAppType): InitialStateType => {
    switch (action.type) {

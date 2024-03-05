@@ -11,7 +11,7 @@ export type AppReducerStateType = {
 const initialState = {
    baseCurrency: "USD",
    targetCurrency: "RUB",
-   amountCurrency: 1,
+   amountCurrency: 0,
 }
 export const appReducer = (state: AppReducerStateType = initialState, action: AppReducerType): AppReducerStateType => {
    switch (action.type) {

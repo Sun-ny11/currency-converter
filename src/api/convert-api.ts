@@ -23,6 +23,13 @@ type SupportedCodesResponse = {
    supported_codes: Currency[]
 };
 
+// type ErrorType = {
+//    result: string;
+//    documentation: string;
+//    "terms-of-use": string;
+//    "error-type": string;
+// };
+
 const instance = axios.create({
    baseURL: "https://v6.exchangerate-api.com/v6/4f7094e78af7307410437337/",
 })
