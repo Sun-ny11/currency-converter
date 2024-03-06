@@ -7,7 +7,6 @@ import { AppReducerStateType } from './redux/app-reducer'
 function App() {
 
   const currency = useSelector<AppRootStateType, AppReducerStateType>(state => state.app)
-
   return (
     <>
       <PairComparison currency={currency} />

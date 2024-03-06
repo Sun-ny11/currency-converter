@@ -1,6 +1,6 @@
 import { Dispatch } from "redux"
 import { Currency, comparisonPare, convertAPI } from "../api/convert-api"
-import { RequestType, setError, setStatus } from "./error-reducer"
+import { RequestType, setStatus } from "./error-reducer"
 
 type convertReducerType = comparisonACType | supportedCurrencyACType | setSecondCurrencyType
 type comparisonACType = ReturnType<typeof comparisonAC>
@@ -82,7 +82,7 @@ export const comparisonTC = (base: string, target: string, amount: number) => as
       dispatch(setStatus(res.data.result))
 
    } catch (e: any) {
-      
+
 
    }
 
@@ -91,11 +91,11 @@ export const supportedCurrencyTC = () => async (dispatch: Dispatch) => {
    try {
       let res = await convertAPI.fetchSupportedCodes()
       dispatch(supportedCurrencyAC(res.data.supported_codes))
-   } catch (e:any) {
+   } catch (e: any) {
       //       console.log(e.response.data.result);
 
       // dispatch(setStatus(e.result))
-      
+
       // dispatch(setError("dx"))
    }
 

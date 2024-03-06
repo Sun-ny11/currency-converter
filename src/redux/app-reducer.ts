@@ -1,4 +1,4 @@
-type AppReducerType = setBaseCurrencyType | setTargetCurrencyType | setAmountCurrencyType 
+type AppReducerType = setBaseCurrencyType | setTargetCurrencyType | setAmountCurrencyType
 type setBaseCurrencyType = ReturnType<typeof setBaseCurrency>
 type setTargetCurrencyType = ReturnType<typeof setTargetCurrency>
 type setAmountCurrencyType = ReturnType<typeof setAmountCurrency>

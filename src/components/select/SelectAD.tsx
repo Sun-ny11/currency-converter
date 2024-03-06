@@ -2,14 +2,13 @@ import { Select } from 'antd';
 import { useSelector } from 'react-redux';
 import { AppRootStateType } from '../../redux/store';
 import { convertStateReducerType } from '../../redux/convert-reducer';
-import { AppReducerStateType } from '../../redux/app-reducer';
 
 type SelectADProps = {
-   currency: AppReducerStateType
-   baseHandler: (value: string) => void
+   currencyDefaultValue: string
+   selectHandler: (value: string) => void
 
 }
-export const SelectAD = ({ currency, baseHandler }: SelectADProps) => {
+export const SelectAD = ({ currencyDefaultValue, selectHandler }: SelectADProps) => {
 
    const conversion = useSelector<AppRootStateType, convertStateReducerType>(state => state.convert)
 
@@ -17,9 +16,9 @@ export const SelectAD = ({ currency, baseHandler }: SelectADProps) => {
       <Select
          placeholder="Search to Select"
          showSearch
-         defaultValue={currency.baseCurrency}
+         defaultValue={currencyDefaultValue}
          style={{ width: "100%" }}
-         onChange={baseHandler}
+         onChange={selectHandler}
          optionFilterProp="children"
          filterOption={(input, option) => (option?.label ?? '').includes(input)}
          filterSort={(optionA, optionB) =>
