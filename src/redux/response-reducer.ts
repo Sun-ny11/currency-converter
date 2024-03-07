@@ -1,6 +1,5 @@
 import { Dispatch } from "redux"
 import { Currency, comparisonPare, convertAPI } from "../api/convert-api"
-import { RequestType, setStatus } from "./error-reducer"
 
 type convertReducerType = comparisonACType | supportedCurrencyACType | setSecondCurrencyType
 type comparisonACType = ReturnType<typeof comparisonAC>
@@ -13,7 +12,7 @@ export type convertStateReducerType = comparisonPare & {
 }
 
 const initialState = {
-   result: "idle" as RequestType,
+   result: "",
    documentation: "",
    terms_of_use: "",
    time_last_update_unix: 0,
@@ -28,7 +27,7 @@ const initialState = {
       ["", ""],
    ]
 }
-export const convertReducer = (state: convertStateReducerType = initialState, action: convertReducerType): convertStateReducerType => {
+export const responseReducer = (state: convertStateReducerType = initialState, action: convertReducerType): convertStateReducerType => {
    switch (action.type) {
       case "COMPARISON": {
          return { ...action.payload.resPair, supported_codes: [...state.supported_codes] }
@@ -37,8 +36,6 @@ export const convertReducer = (state: convertStateReducerType = initialState, ac
          return { ...state, supported_codes: action.payload.supCode }
       }
       case "SET-SECOND-CURRENCY": {
-         console.log(state);
-
          return { ...state, conversion_result: action.payload.second }
       }
       default:
@@ -76,14 +73,9 @@ export const setSecondCurrency = (second: number) => {
 
 export const comparisonTC = (base: string, target: string, amount: number) => async (dispatch: Dispatch) => {
    try {
-      dispatch(setStatus("loading"))
       let res = await convertAPI.comparisonPair(base, target, amount)
       dispatch(comparisonAC(res.data))
-      dispatch(setStatus(res.data.result))
-
    } catch (e: any) {
-
-
    }
 
 }
@@ -92,11 +84,6 @@ export const supportedCurrencyTC = () => async (dispatch: Dispatch) => {
       let res = await convertAPI.fetchSupportedCodes()
       dispatch(supportedCurrencyAC(res.data.supported_codes))
    } catch (e: any) {
-      //       console.log(e.response.data.result);
-
-      // dispatch(setStatus(e.result))
-
-      // dispatch(setError("dx"))
    }
 
 }

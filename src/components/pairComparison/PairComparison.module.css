@@ -12,13 +12,19 @@
 input::-webkit-inner-spin-button {
    display: none;
 }
-
-/* .iHave {
-   padding: 10px;
-
+p{
+   text-align: center;
 }
-
-.iWillGive {
-   padding: 10px;
-
-} */
+.responseWindow {
+   text-align: center;
+   font-size: 50px;
+}
+.contentWrap{
+   min-height: 280px;
+   padding: 24px;
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+   justify-content: center;
+   height: 100%;
+}

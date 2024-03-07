@@ -1,15 +1,13 @@
 import { AnyAction, applyMiddleware, combineReducers, legacy_createStore } from "redux";
-import { convertReducer } from "./convert-reducer";
+import { responseReducer } from "./response-reducer";
 import { ThunkDispatch, thunk } from "redux-thunk";
 import { useDispatch } from "react-redux";
-import { appReducer } from "./app-reducer";
-import { errorReducer } from "./error-reducer";
+import { requestReducer } from "./request-reducer";
 
 
 const rootReducer = combineReducers({
-   convert: convertReducer,
-   app: appReducer,
-   error:errorReducer
+   response: responseReducer,
+   request: requestReducer,
 })
 
 export const store = legacy_createStore(rootReducer, undefined, applyMiddleware(thunk))

@@ -31,7 +31,7 @@ type SupportedCodesResponse = {
 // };
 
 const instance = axios.create({
-   baseURL: "https://v6.exchangerate-api.com/v6/4f7094e78af7307410437337/",
+   baseURL: "https://v6.exchangerate-api.com/v6/86955b467278f640fd22c3eb/",
 })
 
 export const convertAPI = {

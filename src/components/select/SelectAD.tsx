@@ -1,16 +1,17 @@
 import { Select } from 'antd';
 import { useSelector } from 'react-redux';
 import { AppRootStateType } from '../../redux/store';
-import { convertStateReducerType } from '../../redux/convert-reducer';
+import { convertStateReducerType } from '../../redux/response-reducer';
+import { memo } from 'react';
 
 type SelectADProps = {
    currencyDefaultValue: string
    selectHandler: (value: string) => void
 
 }
-export const SelectAD = ({ currencyDefaultValue, selectHandler }: SelectADProps) => {
+export const SelectAD = memo(({ currencyDefaultValue, selectHandler }: SelectADProps) => {
 
-   const conversion = useSelector<AppRootStateType, convertStateReducerType>(state => state.convert)
+   const conversion = useSelector<AppRootStateType, convertStateReducerType>(state => state.response)
 
    return (
       <Select
@@ -26,4 +27,4 @@ export const SelectAD = ({ currencyDefaultValue, selectHandler }: SelectADProps)
          options={conversion.supported_codes.map(el => ({ label: el[1], value: el[0], }))}
       />
    );
-};
+});

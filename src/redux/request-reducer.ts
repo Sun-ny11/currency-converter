@@ -11,9 +11,10 @@ export type AppReducerStateType = {
 const initialState = {
    baseCurrency: "USD",
    targetCurrency: "RUB",
-   amountCurrency: 0,
+   amountCurrency: 1,
 }
-export const appReducer = (state: AppReducerStateType = initialState, action: AppReducerType): AppReducerStateType => {
+export const requestReducer = (state: AppReducerStateType = initialState, action: AppReducerType): AppReducerStateType => {
+   debugger
    switch (action.type) {
       case "SET-BASE-CURRENCY": {
          return { ...state, baseCurrency: action.payload.base }
