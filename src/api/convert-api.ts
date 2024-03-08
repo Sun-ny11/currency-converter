@@ -1,8 +1,7 @@
 import axios from "axios"
-import { RequestType } from "../redux/error-reducer";
 
 export type comparisonPare = {
-   result: RequestType;
+   result: string;
    documentation: string;
    terms_of_use: string;
    time_last_update_unix: number;
@@ -22,13 +21,6 @@ type SupportedCodesResponse = {
    terms_of_use: string
    supported_codes: Currency[]
 };
-
-// type ErrorType = {
-//    result: string;
-//    documentation: string;
-//    "terms-of-use": string;
-//    "error-type": string;
-// };
 
 const instance = axios.create({
    baseURL: "https://v6.exchangerate-api.com/v6/86955b467278f640fd22c3eb/",
