@@ -1,17 +1,15 @@
 import { Select } from 'antd';
-import { useSelector } from 'react-redux';
-import { AppRootStateType } from '../../redux/store';
-import { convertStateReducerType } from '../../redux/response-reducer';
+import { useAppSelector } from '../../redux/store';
 import { memo } from 'react';
 
 type SelectADProps = {
    currencyDefaultValue: string
    selectHandler: (value: string) => void
-
 }
+
 export const SelectAD = memo(({ currencyDefaultValue, selectHandler }: SelectADProps) => {
 
-   const conversion = useSelector<AppRootStateType, convertStateReducerType>(state => state.response)
+   const conversion = useAppSelector(state => state.response)
 
    return (
       <Select

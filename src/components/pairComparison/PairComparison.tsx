@@ -1,8 +1,7 @@
 import { ChangeEvent, useCallback, useEffect, useRef } from "react";
-import { AppRootStateType, useAppDispatch } from "../../redux/store";
-import { useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { AppReducerStateType, setAmountCurrency, setBaseCurrency, setTargetCurrency } from "../../redux/request-reducer";
-import { comparisonTC, convertStateReducerType, supportedCurrencyTC } from "../../redux/response-reducer";
+import { comparisonTC, supportedCurrencyTC } from "../../redux/response-reducer";
 import s from "./PairComparison.module.css"
 import { Input } from 'antd';
 import countryData from "../../utils/countryData";
@@ -17,7 +16,7 @@ type PairComparisonProps = {
 export const PairComparison = ({ currency }: PairComparisonProps) => {
 
    const dispatch = useAppDispatch()
-   const conversion = useSelector<AppRootStateType, convertStateReducerType>(state => state.response)
+   const conversion = useAppSelector(state => state.response)
 
 
    useEffect(() => {
