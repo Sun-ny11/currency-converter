@@ -14,7 +14,6 @@ const initialState = {
    amountCurrency: 1,
 }
 export const requestReducer = (state: AppReducerStateType = initialState, action: AppReducerType): AppReducerStateType => {
-   debugger
    switch (action.type) {
       case "SET-BASE-CURRENCY": {
          return { ...state, baseCurrency: action.payload.base }

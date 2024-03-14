@@ -50,6 +50,8 @@ export const PairComparison = ({ currency }: PairComparisonProps) => {
 
    }, [currency.baseCurrency, currency.amountCurrency]);
 
+   console.log("Pair");
+
 
    const symbol = countryData.find(el => el.abbreviation === currency.targetCurrency)
 

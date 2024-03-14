@@ -3,6 +3,8 @@ import './App.css'
 import { PairComparison } from "./components/pairComparison/PairComparison"
 import { AppRootStateType } from './redux/store'
 import { AppReducerStateType } from './redux/request-reducer'
+import { GlobalError } from './components/GlobalError'
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   console.log("APP");
@@ -11,6 +13,7 @@ function App() {
   return (
     <>
       <PairComparison currency={currency} />
+      <GlobalError />
     </>
   )
 }
